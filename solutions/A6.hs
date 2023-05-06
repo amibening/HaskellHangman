@@ -1,20 +1,39 @@
 module A6 where
 
+import Data.List (intersperse, sort)
 import Provided
-
-import Data.List ( intersperse, sort )
 
 -- *** A6-0: WARM-UP *** --
 
 -- Q#01
 
+type Chances = Int
+
+type Guess = String
+
+type Move = Char
+
+type Secret = String
+
+type Dictionary = [String]
 
 -- Q#02
 data GameException
+  = InvalidWord
+  | InvalidMove
+  | RepeatMove
+  | GameOver
 
 -- Q#03
 
-lengthInRange = undefined
+lengthInRange :: Secret -> Bool
+lengthInRange secret =
+  let (minLen, maxLen) = _LENGTH
+      len = length secret
+   in len >= minLen && len <= maxLen
+
+_LENGTH :: (Int, Int)
+_LENGTH = (5, 10)
 
 -- Q#04
 
@@ -31,7 +50,6 @@ updateChances = undefined
 -- Q#07
 
 setSecret = undefined
-
 
 -- *** A6-1: Records & Instances *** --
 
@@ -53,17 +71,16 @@ updateGame = undefined
 -- Q#12
 
 showGameHelper :: String -> [Char] -> Int -> String
-showGameHelper game moves chances = unlines [
+showGameHelper game moves chances =
+  unlines
+    [ _STARS_,
+      "\tSecret Word:\t" ++ intersperse ' ' game ++ "\n",
+      "\tGuessed:\t" ++ intersperse ' ' (sort moves) ++ "\n",
+      "\tChances:\t" ++ show chances,
       _STARS_
-    , "\tSecret Word:\t" ++ intersperse ' ' game ++ "\n"
-    , "\tGuessed:\t" ++ intersperse ' ' (sort moves) ++ "\n"
-    , "\tChances:\t" ++ show chances
-    , _STARS_
     ]
 
-
 -- Q#13
-
 
 -- *** A6-2: Exception Contexts *** --
 
@@ -79,9 +96,7 @@ validateSecret = undefined
 
 hasValidChars = undefined
 
-
 isValidLength = undefined
-
 
 isInDict = undefined
 
